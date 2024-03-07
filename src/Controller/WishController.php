@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Censurator\Censurator;
 use App\Entity\Wish;
 use App\Form\WishType;
 use App\Repository\WishRepository;
@@ -52,13 +53,17 @@ class WishController extends AbstractController
     }
 
     #[Route(path: "create", name: 'create', methods: ['GET', 'POST'])]
-    public function form(EntityManagerInterface $entMana, Request $request, SluggerInterface $slugger): Response
+    public function form(Censurator $censurator,EntityManagerInterface $entMana, Request $request, SluggerInterface $slugger): Response
     {
         $wish = new Wish();
         $wishForm = $this->createForm(WishType::class, $wish);
         $wishForm->handleRequest($request);
         if ($wishForm->isSubmitted() && $wishForm->isValid()) {
             $wish->setisPublished(true);
+            $censoredTitle=$censurator->purify($wish->getTitle());
+            $censoredDescription=$censurator->purify($wish->getDescription());
+            $wish->setTitle($censoredTitle);
+            $wish->setDescription($censoredDescription);
             if ($wishForm->get('picture_file')->getData() instanceof UploadedFile) {
                 $pictureFile = $wishForm->get('picture_file')->getData();
                 $fileName = $slugger->slug($wish->getTitle()) . '-' . uniqid() . '.' . $pictureFile->guessExtension();
@@ -75,7 +80,7 @@ class WishController extends AbstractController
     }
 
     #[Route(path: "/update/{id}", name: 'update', methods: ['GET', 'POST'])]
-    public function update(EntityManagerInterface $entityManager, SluggerInterface $slugger, Request $request, int $id): Response
+    public function update(Censurator $censurator, EntityManagerInterface $entityManager, SluggerInterface $slugger, Request $request, int $id): Response
     {
         $wish = $entityManager->getRepository(Wish::class)->find($id);
 
@@ -92,10 +97,12 @@ class WishController extends AbstractController
 
             // Modifier les attributs du souhait seulement si les données sont définies et non vides
             if (!empty($formData->getTitle())) {
-                $wish->setTitle($formData->getTitle());
+                $censoredTitle = $censurator->purify($formData->getTitle());
+                $wish->setTitle($censoredTitle);
             }
             if (!empty($formData->getDescription())) {
-                $wish->setDescription($formData->getDescription());
+                $censoredDescription=$censurator->purify($formData->getDescription());
+                $wish->setDescription($censoredDescription);
             }
             if (!empty($formData->getAuthor())) {
                 $wish->setAuthor($formData->getAuthor());
