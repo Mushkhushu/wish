@@ -5,6 +5,10 @@
 {% endblock %}
 
 {% block body %}
+    <main class="d-flex">
+        {%  block sidebar %}
+            {{ parent() }}
+        {% endblock %}
     <div class="container">
         <h1 class="mt-5">BucketList - Notre équipe !</h1>
         <section class="creators row">
@@ -39,4 +43,5 @@
             <p>Vivamus at ex et arcu posuere condimentum sit amet non ex. Nam consequat sapien et tortor dapibus, nec commodo ex viverra. Cras quis posuere risus. Vivamus eget lorem eget enim efficitur volutpat.</p>
         </section>
     </div>
+    </main>
 {% endblock %}

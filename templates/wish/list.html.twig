@@ -5,6 +5,10 @@
 {% endblock %}
 
 {% block body %}
+    <main class="d-flex">
+        {%  block sidebar %}
+            {{ parent() }}
+        {% endblock %}
     <div class="container">
         <h1 class="mt-5">Liste de nos WISHES !</h1>
         {% for group, messages in app.flashes %}
@@ -52,4 +56,5 @@
             </ul>
         </nav>
     </div>
+    </main>
 {% endblock %}

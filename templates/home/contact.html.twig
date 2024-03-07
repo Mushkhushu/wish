@@ -5,6 +5,10 @@
 {% endblock %}
 
 {% block body %}
+<main class="d-flex">
+    {%  block sidebar %}
+        {{ parent() }}
+    {% endblock %}
     <div class="container">
         <h1 class="mt-5">BucketList - Contacts !</h1>
 
@@ -44,4 +48,5 @@
             </form>
         </section>
     </div>
+</main>
 {% endblock %}

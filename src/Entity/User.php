@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Table(name: 'users')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[UniqueEntity(fields: ['pseudo'], message: 'Ce pseudo est déjà pris', errorPath: 'pseudo')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -24,6 +25,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180, unique: true)]
     #[Assert\Email(message: 'The email is not valid')]
     private ?string $email = null;
+
 
     /**
      * @var list<string> The user roles
@@ -36,6 +38,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    #[ORM\Column(name: 'pseudo', type: Types::STRING, length: 50, unique: true, nullable: true)]
+    #[Assert\Length(max: 50, maxMessage: "Le pseudo doit faire moins de {{ limit }} caractères.")]
+    #[Assert\Length(min: 3, minMessage: "Le pseudo doit faire plus de {{ limit }} caractères.")]
+    private ?string $pseudo = null;
 
     public function getId(): ?int
     {
@@ -110,5 +117,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getPseudo(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    public function setPseudo(?string $pseudo): static
+    {
+        $this->pseudo = $pseudo;
+
+        return $this;
     }
 }

@@ -5,6 +5,10 @@
 {% endblock %}
 
 {% block body %}
+<main class="d-flex">
+    {%  block sidebar %}
+        {{ parent() }}
+    {% endblock %}
 
     {% for group, messages in app.flashes %}
         {% for message in messages %}
@@ -38,4 +42,5 @@
             </div>
         </div>
     </div>
+</main>
 {% endblock %}

@@ -5,6 +5,10 @@
 {% endblock %}
 
 {% block body %}
+<main class="d-flex">
+    {%  block sidebar %}
+        {{ parent() }}
+    {% endblock %}
     <div class="container">
         <h1 class="mt-5">Liste de nos CATEGORIES !</h1>
         {% for group, messages in app.flashes %}
@@ -36,4 +40,5 @@
         </table>
         <a href="{{ url('category_create') }}" class="btn btn-outline-success">Créer une CATEGORY</a>
     </div>
+</main>
 {% endblock %}

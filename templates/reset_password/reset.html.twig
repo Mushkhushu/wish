@@ -3,6 +3,10 @@
 {% block title %}Reset your password{% endblock %}
 
 {% block body %}
+<main class="d-flex">
+    {%  block sidebar %}
+        {{ parent() }}
+    {% endblock %}
 <div class="container">
     <h1 class="mt-5">Reset your password</h1>
     <div class="row">
@@ -16,9 +20,8 @@
         </div>
     </div>
 </div>
+</main>
 {% endblock %}
-
-<h1></h1>
 
 
 

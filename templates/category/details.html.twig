@@ -4,6 +4,10 @@
     Détails
 {% endblock %}
 {% block body %}
+    <main class="d-flex">
+        {%  block sidebar %}
+            {{ parent() }}
+        {% endblock %}
     <div class="container">
         <h1 class="display-4">{{ category.name }}</h1>
         {%  if category.wishes|length == 0 %}
@@ -30,4 +34,5 @@
             {% endfor %}
         </div>
     </div>
+    </main>
 {% endblock %}
