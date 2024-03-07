@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Contact
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mt-5">BucketList - Contacts !</h1>
+
+        <section class="contact-info mt-5">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Informations de contact</h2>
+                    <p><strong>Adresse:</strong> 123 Rue des Voyageurs, Ville, Pays</p>
+                    <p><strong>Téléphone:</strong> +33 123 456 789</p>
+                    <p><strong>Email:</strong> info@bucketlist.com</p>
+                </div>
+                <div class="col-md-6">
+                    <h2>Heures d'ouverture</h2>
+                    <p><strong>Lundi - Vendredi:</strong> 9h00 - 17h00</p>
+                    <p><strong>Samedi:</strong> 10h00 - 14h00</p>
+                    <p><strong>Dimanche:</strong> Fermé</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact-form mt-5">
+            <h2>Envoyez-nous un message</h2>
+            <form>
+                <div class="mb-3">
+                    <label for="name" class="form-label">Nom:</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email:</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="message" class="form-label">Message:</label>
+                    <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-outline-primary">Envoyer</button>
+            </form>
+        </section>
+    </div>
+{% endblock %}

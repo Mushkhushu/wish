@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Liste des catégories
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mt-5">Liste de nos CATEGORIES !</h1>
+        {% for group, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ group }}" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endfor %}
+        <table class="table mt-5">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Nombre de voeux</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for category in categories %}
+                <tr>
+                    <th scope="row">{{ category.id }}</th>
+                    <td>{{ category.name }}</td>
+                    <td> {{ category.wishes|length }}</td>
+                    <td><a href="{{ url('category_details', {'id': category.id}) }}" class="btn btn-outline-primary">Voir</a>
+                        <a href="{{ path('category_update', {'id': category.id}) }}" class="btn btn-outline-warning">Editer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ url('category_create') }}" class="btn btn-outline-success">Créer une CATEGORY</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Détails
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <h1 class="display-4">{{ category.name }}</h1>
+        {%  if category.wishes|length == 0 %}
+        <h2 class="h5">Aucun vœu dans cette catégorie pour le moment</h2>
+        {% else %}
+        <h2 class="h5">Vœux associés</h2>
+        {% endif %}
+        {% for group, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ group }}" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endfor %}
+        <div class="row">
+            {% for wish in category.wishes %}
+                <div class="col-md-6 mb-4">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="{{ asset(picture_dir ~ '/'  ~ wish.picture) }}" alt="{{ wish.title }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ wish.title }}</h5>
+                            <p class="card-text">{{ wish.description }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

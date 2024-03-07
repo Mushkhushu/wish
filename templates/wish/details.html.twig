@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Détails
+{% endblock %}
+
+{% block body %}
+
+    {% for group, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ group }}" role="alert">{{ message }}</div>
+        {% endfor %}
+    {% endfor %}
+
+    <div class="container">
+        <div class="card mt-5">
+            <div class="card-body">
+                <h1 class="card-title">{{ wish.title }}</h1>
+                <p class="card-text">
+                    <strong>Catégorie:</strong>
+                    {% if wish.category is not empty %}
+                        {{ wish.category.name }}
+                    {% else %}
+                        N/C
+                    {% endif %}
+                </p>
+                <p class="card-text"><strong>Description:</strong> {{ wish.description }}</p>
+                <p class="card-text"><strong>Proposé par:</strong> {{ wish.author }}</p>
+                <p class="card-text">
+                    {% if wish.picture is not empty %}
+                        <img src="{{ asset(picture_dir ~ '/'  ~ wish.picture) }}" alt="{{ wish.title }}" class="wish-img img-fluid" width="200px"/>
+                    {% endif %}
+                </p>
+                <p class="card-text"><strong>Date d'ajout:</strong> {{ wish.dateCreated|date('d/m/Y') }}</p>
+                <form action="{{ path('wish_delete', {'id': wish.id}) }}" method="POST" class="mt-3">
+                    <button type="submit" class="btn btn-outline-danger">Supprimer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    À propos
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mt-5">BucketList - Notre équipe !</h1>
+        <section class="creators row">
+            {% for creator in creatorsData %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                {% if creator.firstname == 'David' %}
+                                    {{ creator.firstname }} <span class="text-danger">&#10084;&#65039;</span>
+                                {% else %}
+                                    {{ creator.firstname }}
+                                {% endif %}
+                            </h5>
+                            <p class="card-text">Nom : {{ creator.lastname }}</p>
+                            <p class="card-text">Date de naissance : {{ creator.dateOfBirth | date('d/m/Y') }}</p>
+                            <p class="card-text">Création : {{ creator.creatorOf }}</p>
+                            <img class="card-img-top avatar" src="{{ creator.picture }}" alt="avatar de {{ creator.firstname }}">
+                            <p class="card-text">{{ creator.description }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </section>
+        <section class="content">
+            <h1 class="mt-5">BucketList - Informations !</h1>
+            <h2>Informations utiles</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet nisi non libero interdum sodales. Integer mattis tempus magna, nec hendrerit lectus lacinia id. Aliquam nec velit ut tortor tincidunt venenatis. Fusce nec tortor sit amet libero dapibus suscipit.</p>
+            <h2>Conditions générales</h2>
+            <p>Curabitur ullamcorper felis in purus bibendum, sed euismod ligula volutpat. Proin sed nisl sed urna efficitur euismod. Nam faucibus arcu id felis rutrum aliquam. Mauris nec arcu leo. Vestibulum quis ligula tincidunt, tincidunt velit et, pharetra magna.</p>
+            <h2>Politique de confidentialité</h2>
+            <p>Vivamus at ex et arcu posuere condimentum sit amet non ex. Nam consequat sapien et tortor dapibus, nec commodo ex viverra. Cras quis posuere risus. Vivamus eget lorem eget enim efficitur volutpat.</p>
+        </section>
+    </div>
+{% endblock %}

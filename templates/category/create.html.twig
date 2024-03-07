@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    Create Category
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <h1 class="mt-5">Create a new CATEGORY !</h1>
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_start(form) }}
+                <div class="mb-3">
+                    {{ form_label(form.name, 'Nom:', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                    {% set errors = form_errors(form.name) %}
+                    {% if errors %}
+                        <div class="text-danger">
+                            {{ errors|striptags }}
+                        </div>
+                    {% endif %}
+
+                </div>
+                {{ form_row(form.submit, {'label': 'Créer votre CATEGORY'}) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+

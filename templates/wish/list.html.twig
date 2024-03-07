@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Liste des idées
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mt-5">Liste de nos WISHES !</h1>
+        {% for group, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ group }}" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endfor %}
+        <table class="table mt-5">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Catégorie</th>
+                <th scope="col">Titre</th>
+                <th scope="col">Date de création</th>
+                <th scope="col">Auteur</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for wish in wishes %}
+                <tr>
+                    <th scope="row">{{ wish.id }}</th>
+                    <td>{% if wish.category is not null %}
+                            {{ wish.category.name }}
+                        {% else %}
+                            N/C
+                        {% endif %}</td>
+                    <td>{{ wish.title }}</td>
+                    <td>{{ wish.dateCreated|date('d/m/Y') }}</td>
+                    <td>{{ wish.author }}</td>
+                    <td><a href="{{ url('wish_details', {'id': wish.id}) }}" class="btn btn-outline-primary">Voir</a>
+                    <a href="{{ path('wish_update', {'id': wish.id}) }}" class="btn btn-outline-warning">Editer</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ url('wish_create') }}" class="btn btn-outline-success">Créer un WISH</a>
+        {% set nbPages = (total / elementsByPage)|round %}
+        <nav>
+            <ul class="pagination justify-content-center mt-4">
+                {% for i in 1..nbPages %}
+                    <li class="page-item"><a class="page-link" href="{{ url('wish_list', {'p': i}) }}">{{ i }}</a></li>
+                {% endfor %}
+            </ul>
+        </nav>
+    </div>
+{% endblock %}
