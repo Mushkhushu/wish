@@ -4,7 +4,6 @@ namespace App\Censurator;
 
 class Censurator
 {
-    private $forbiddenWords = ['lapin', 'canard', 'éléphant'];
 
     public function __construct()
     {
@@ -13,8 +12,13 @@ class Censurator
 
     public function purify(string $text): string
     {
-        foreach ($this->forbiddenWords as $word) {
-            $text = str_ireplace($word, '*', $text);
+        $file = '../data/forbidden_words.txt';
+        $forbiddenWords = file($file);
+
+        foreach ($forbiddenWords as $word) {
+            $word = str_ireplace(PHP_EOL, '', $word);
+            $replacement = str_repeat('*', strlen($word));
+            $text = str_ireplace($word, $replacement, $text);
         }
         return $text;
     }

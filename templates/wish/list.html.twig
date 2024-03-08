@@ -40,13 +40,16 @@
                     <td>{{ wish.dateCreated|date('d/m/Y') }}</td>
                     <td>{{ wish.author }}</td>
                     <td><a href="{{ url('wish_details', {'id': wish.id}) }}" class="btn btn-outline-primary">Voir</a>
-                    <a href="{{ path('wish_update', {'id': wish.id}) }}" class="btn btn-outline-warning">Editer</a></td>
+                        {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('wish_update', {'id': wish.id}) }}" class="btn btn-outline-warning">Editer</a>
+                    {% endif %}</td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
-
+        {% if is_granted('IS_AUTHENTICATED') %}
         <a href="{{ url('wish_create') }}" class="btn btn-outline-success">Créer un WISH</a>
+        {% endif %}
         {% set nbPages = (total / elementsByPage)|round %}
         <nav>
             <ul class="pagination justify-content-center mt-4">

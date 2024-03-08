@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vos Infos{% endblock %}
+
+{% block body %}
+    <main class="d-flex">
+        {%  block sidebar %}
+            {{ parent() }}
+        {% endblock %}
+
+        {% for group, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ group }}" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endfor %}
+
+        <div class="container">
+            <h1 class="mt-5">Oups Erreur 404</h1>
+           Désolée, ce chemin n'existe pas
+        </div>
+    </main>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vos Infos{% endblock %}
+
+{% block body %}
+    <main class="d-flex">
+        {% block sidebar %}
+            {{ parent() }}
+        {% endblock %}
+
+        {% for group, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ group }}" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endfor %}
+        <div class="container">
+            <h1 class="mt-5">Modifier Vos Informations</h1>
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_start(form) }}
+                    <div class="mb-3">
+                        {{ form_label(form.pseudo, 'Pseudo:', {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.pseudo, {'attr': {'class': 'form-control', 'readonly': 'readonly'}}) }}
+                        {% set errors = form_errors(form.pseudo) %}
+                        {% if errors %}
+                            <div class="text-danger">
+                                {{ errors|striptags }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        {{ form_label(form.email, 'Email:', {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                        {% set errors = form_errors(form.email) %}
+                        {% if errors %}
+                            <div class="text-danger">
+                                {{ errors|striptags }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        {{ form_label(form.picture_file, 'Photo:', {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.picture_file, {'attr': {'class': 'form-control'}}) }}
+                        {% set errors = form_errors(form.picture_file) %}
+                        {% if errors %}
+                            <div class="text-danger">
+                                {{ errors|striptags }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        {{ form_label(form.password, 'Mot de passe:', {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.password, {'attr': {'class': 'form-control'}}) }}
+                        {% set errors = form_errors(form.password) %}
+                        {% if errors %}
+                            <div class="text-danger">
+                                {{ errors|striptags }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    {{ form_row(form.submit, {'label': 'Modifier votre profil'}) }}
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+
+
