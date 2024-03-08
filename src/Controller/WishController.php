@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route(path: 'wish/', name: 'wish_')]
@@ -55,8 +56,12 @@ class WishController extends AbstractController
     #[Route(path: "create", name: 'create', methods: ['GET', 'POST'])]
     public function form(Censurator $censurator,EntityManagerInterface $entMana, Request $request, SluggerInterface $slugger): Response
     {
+        $user = $this->getUser();
         $wish = new Wish();
         $wishForm = $this->createForm(WishType::class, $wish);
+        if ($user !== null) {
+            $wishForm->get('author')->setData($user->getPseudo());
+        }
         $wishForm->handleRequest($request);
         if ($wishForm->isSubmitted() && $wishForm->isValid()) {
             $wish->setisPublished(true);
@@ -132,7 +137,7 @@ class WishController extends AbstractController
         ]);
     }
 
-
+    #[IsGranted('ROLE_ADMIN')]
     #[Route(path: "{id}", name: 'delete', requirements: ["id" => "[1-9]\d*"], methods: ['POST'])]
     public function delete(EntityManagerInterface $entMana, Request $request): Response
     {

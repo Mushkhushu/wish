@@ -36,9 +36,11 @@
                     {% endif %}
                 </p>
                 <p class="card-text"><strong>Date d'ajout:</strong> {{ wish.dateCreated|date('d/m/Y') }}</p>
+                {% if is_granted('ROLE_ADMIN') %}
                 <form action="{{ path('wish_delete', {'id': wish.id}) }}" method="POST" class="mt-3">
                     <button type="submit" class="btn btn-outline-danger">Supprimer</button>
                 </form>
+                {% endif %}
             </div>
         </div>
     </div>
